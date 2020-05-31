@@ -36,6 +36,12 @@ namespace PreceptorTimeApi
                 app.UseDeveloperExceptionPage();
             }
 
+            //TODO: be more strict if this was a real app
+            app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
