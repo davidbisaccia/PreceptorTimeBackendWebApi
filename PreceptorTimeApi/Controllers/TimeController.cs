@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -104,7 +105,7 @@ namespace PreceptorTimeApi.Controllers
         [HttpPut]
         public int AddNewEntry([FromBody]TimeEntryDTO timeEntry)
         {
-            DateTime date = DateTime.Parse(timeEntry.Date);//,"dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+            DateTime date = DateTime.Parse(timeEntry.Date);
             return 10;
         }
 
