@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PreceptorTimeApi.DTO
 {
-    public class TimeEntryDTO
+    public class TimeEntryDto
     {
         public int Id { get; set; }
         public int PreceptorId { get; set; }

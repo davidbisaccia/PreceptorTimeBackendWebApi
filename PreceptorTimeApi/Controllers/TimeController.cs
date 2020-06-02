@@ -11,7 +11,7 @@ using PreceptorTimeApi.DTO;
 namespace PreceptorTimeApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TimeController : ControllerBase
     {
         private const string IdParameter = "{id:int}";
@@ -22,9 +22,9 @@ namespace PreceptorTimeApi.Controllers
             _logger = logger;
         }
 
-        private IEnumerable<TimeEntryDTO> FakeDataForTestingWithNoSQL()
+        private IEnumerable<TimeEntryDto> FakeDataForTestingWithNoSQL()
         {
-            var t1 = new TimeEntryDTO()
+            var t1 = new TimeEntryDto()
             {
                 Id = 1,
                 PreceptorId = 1,
@@ -39,7 +39,7 @@ namespace PreceptorTimeApi.Controllers
             };
             yield return t1;
 
-            var t2 = new TimeEntryDTO()
+            var t2 = new TimeEntryDto()
             {
                 Id = 2,
                 PreceptorId = 3,
@@ -54,7 +54,7 @@ namespace PreceptorTimeApi.Controllers
             };
             yield return t2;
 
-            var t3 = new TimeEntryDTO()
+            var t3 = new TimeEntryDto()
             {
                 Id = 3,
                 PreceptorId = 4,
@@ -68,7 +68,7 @@ namespace PreceptorTimeApi.Controllers
             };
             yield return t3;
 
-            var t4 = new TimeEntryDTO()
+            var t4 = new TimeEntryDto()
             {
                 Id = 4,
                 PreceptorId = 4,
@@ -85,13 +85,13 @@ namespace PreceptorTimeApi.Controllers
         }
 
         [HttpGet("preceptors/{id:int}")]
-        public IEnumerable<TimeEntryDTO> GetPreceptorTimeEntries(int id)
+        public IEnumerable<TimeEntryDto> GetPreceptorTimeEntries(int id)
         {
             return FakeDataForTestingWithNoSQL();
         }
 
         [HttpGet("learners/{id:int}")]
-        public IEnumerable<TimeEntryDTO> GetLearnerTimeEntries(int id)
+        public IEnumerable<TimeEntryDto> GetLearnerTimeEntries(int id)
         {
             return FakeDataForTestingWithNoSQL();
         }
@@ -103,14 +103,14 @@ namespace PreceptorTimeApi.Controllers
         }
 
         [HttpPut]
-        public int AddNewEntry([FromBody]TimeEntryDTO timeEntry)
+        public int AddNewEntry([FromBody]TimeEntryDto timeEntry)
         {
             DateTime date = DateTime.Parse(timeEntry.Date);
             return 10;
         }
 
         [HttpPost]
-        public bool EditEntry([FromBody]TimeEntryDTO timeEntry)
+        public bool EditEntry([FromBody]TimeEntryDto timeEntry)
         {
             return true;
         }
