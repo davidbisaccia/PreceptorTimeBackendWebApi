@@ -3,3 +3,4 @@
 *.suo
 /PreceptorTimeApi/bin/*
 /PreceptorTimeApi/obj/*
+.vs/PreceptorTimeApi/v16/.suo
