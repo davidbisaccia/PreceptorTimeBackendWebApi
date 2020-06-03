@@ -95,7 +95,7 @@ namespace PreceptorTimeApi.Controllers
         }
 
         [HttpPost("update")]
-        public bool UpdateAccountStatus([FromBody]UpdateAccountStatusDto resetDto)
+        public bool UpdateAccountStatus([FromBody]UpdateAccountStatusDto updateDto)
         {
             return true;
         }
