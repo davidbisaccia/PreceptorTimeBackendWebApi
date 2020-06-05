@@ -6,6 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PreceptorTimeApi.Converters;
 using PreceptorTimeApi.DTO;
 
 namespace PreceptorTimeApi.Controllers
@@ -32,8 +33,7 @@ namespace PreceptorTimeApi.Controllers
                 Hours = 2,
                 Notes = "Notes",
                 Rotation = "GI",
-                Date = DateTime.Now.ToUniversalTime().ToString("s"),
-                //Date = DateTime.Now.ToString(//),//"MM/dd/yyyy", CultureInfo.InvariantCulture),
+                Date = DateConverter.Convert(DateTime.Now),
                 PreceptorDisplayName = "Dave",
                 StudentDisplayName = "Me",
             };
@@ -47,8 +47,7 @@ namespace PreceptorTimeApi.Controllers
                 Hours = 5,
                 Notes = "notes asdsadas dasd sad asd asd ",
                 Rotation = "Endo",
-                Date = DateTime.Now.ToUniversalTime().ToString("s"),
-                //Date = DateTime.Now.ToString(),//"MM/dd/yyyy", CultureInfo.InvariantCulture),
+                Date = DateConverter.Convert(DateTime.Now),
                 PreceptorDisplayName = "Brad",
                 StudentDisplayName = "Me",
             };
@@ -62,7 +61,7 @@ namespace PreceptorTimeApi.Controllers
                 Hours = 2,
                 Notes = "notes",
                 Rotation = "Endo",
-                Date = DateTime.Now.ToUniversalTime().ToString("s"),//"MM/dd/yyyy", CultureInfo.InvariantCulture),
+                Date = DateConverter.Convert(DateTime.Now),
                 PreceptorDisplayName = "MECEPTOR",
                 StudentDisplayName = "peeps",
             };
@@ -76,8 +75,7 @@ namespace PreceptorTimeApi.Controllers
                 Hours = 4,
                 Notes = "notes asdsadas dasd sad asd asd ",
                 Rotation = "Endo",
-                Date = DateTime.Now.ToUniversalTime().ToString("s"),
-                //Date = DateTime.Now.ToString(),//"MM/dd/yyyy", CultureInfo.InvariantCulture),
+                Date = DateConverter.Convert(DateTime.Now),
                 PreceptorDisplayName = "MECEPTOR",
                 StudentDisplayName = "other peeps",
             };
