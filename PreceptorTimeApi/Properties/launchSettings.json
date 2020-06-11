@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PreceptorTimeApi": {
+    "PreceptorTime.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "time",

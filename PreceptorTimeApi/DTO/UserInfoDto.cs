@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PreceptorTimeApi.DTO
+namespace PreceptorTime.Api.DTO
 {
     public class UserInfoDto
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PreceptorTimeApi.DTO;
+using PreceptorTime.Api.DTO;
 
-namespace PreceptorTimeApi.Controllers
+namespace PreceptorTime.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -89,13 +89,13 @@ namespace PreceptorTimeApi.Controllers
         }
 
         [HttpPost("reset")]
-        public bool ResetUserPassword([FromBody]ResetPasswordDto resetDto)
+        public bool ResetUserPassword(ResetPasswordDto resetDto)
         {
             return true;
         }
 
         [HttpPost("update")]
-        public bool UpdateAccountStatus([FromBody]UpdateAccountStatusDto updateDto)
+        public bool UpdateAccountStatus(UpdateAccountStatusDto updateDto)
         {
             return true;
         }

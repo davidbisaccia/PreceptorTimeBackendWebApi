@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "1",
+    "DisplayName": "dave",
+    "AccountType": "preceptor",
+    "Active": "true",
+    "Email": "dave",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "2",
+    "DisplayName": "me",
+    "AccountType": "student",
+    "Active": true,
+    "Email": "",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "3",
+    "DisplayName": "Brad",
+    "AccountType": "admin",
+    "Active": "true",
+    "Email": "dave",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "4",
+    "DisplayName": "MECEPTOR",
+    "AccountType": "preceptor",
+    "Active": "true",
+    "Email": "dave",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "5",
+    "DisplayName": "peeps",
+    "AccountType": "resident",
+    "Active": "true",
+    "Email": "dave",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "6",
+    "DisplayName": "other peeps",
+    "AccountType": "student",
+    "Active": "true",
+    "Email": "dave",
+    "Token": "token",
+    "TokenExpiration": "2020-06-11T02:35:16"
+  }
+]

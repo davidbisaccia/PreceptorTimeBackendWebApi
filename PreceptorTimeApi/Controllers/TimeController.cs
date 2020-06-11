@@ -6,10 +6,10 @@ using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PreceptorTimeApi.Converters;
-using PreceptorTimeApi.DTO;
+using PreceptorTime.Api.Converters;
+using PreceptorTime.Api.DTO;
 
-namespace PreceptorTimeApi.Controllers
+namespace PreceptorTime.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -101,14 +101,14 @@ namespace PreceptorTimeApi.Controllers
         }
 
         [HttpPut]
-        public int AddNewEntry([FromBody]TimeEntryDto timeEntry)
+        public int AddNewEntry(TimeEntryDto timeEntry)
         {
             DateTime date = DateTime.Parse(timeEntry.Date);
             return 10;
         }
 
         [HttpPost]
-        public bool EditEntry([FromBody]TimeEntryDto timeEntry)
+        public bool EditEntry(TimeEntryDto timeEntry)
         {
             return true;
         }

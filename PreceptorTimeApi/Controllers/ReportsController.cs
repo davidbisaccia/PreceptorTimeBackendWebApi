@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using PreceptorTimeApi.DTO;
+using PreceptorTime.Api.DTO;
 
-namespace PreceptorTimeApi.Controllers
+namespace PreceptorTime.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

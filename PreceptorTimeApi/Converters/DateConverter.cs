@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PreceptorTimeApi.Converters
+namespace PreceptorTime.Api.Converters
 {
     public static class DateConverter
     {

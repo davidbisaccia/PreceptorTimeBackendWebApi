@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "1",
+    "TeacherId": "1",
+    "StudentId": "student name",
+    "Rotation": "GI",
+    "Hours": "33",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "2",
+    "TeacherId": "1",
+    "StudentId": "2",
+    "Rotation": "Admin",
+    "Hours": "278",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "3",
+    "TeacherId": "1",
+    "StudentId": "5",
+    "Rotation": "GI",
+    "Hours": "22",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "4",
+    "TeacherId": "3",
+    "StudentId": "5",
+    "Rotation": "Nefro",
+    "Hours": "11",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "5",
+    "TeacherId": "1",
+    "StudentId": "6",
+    "Rotation": "Nuero",
+    "Hours": "26",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  },
+  {
+    "Id": "6",
+    "TeacherId": "3",
+    "StudentId": "6",
+    "Rotation": "Rhuem",
+    "Hours": "412",
+    "Notes": "Notes test",
+    "Date": "2020-06-11T02:35:16"
+  }
+]
