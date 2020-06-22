@@ -9,121 +9,72 @@ using PreceptorTime.Domain.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Internal;
+using PreceptorTime.Fixtures;
 
 namespace PreceptorTime.Infrastructure.Tests
 {
-    public class UserRepositoryTests
+    public class UserRepositoryTests : IClassFixture<PreceptorTimeContextFactory>
     {
+        private readonly UserRepository _userRepo;
+        private readonly TestPreceptorTimeContext _context;
+
+        public UserRepositoryTests(PreceptorTimeContextFactory factory)
+        {
+            _context = factory.ContextInstance;
+            _userRepo = new UserRepository(_context);
+        }
+
+
         [Fact]
         public async Task GetAsync_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-            var result = await userRepo.GetAsync();
+            var result = await _userRepo.GetAsync();
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Id1_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-            var result = await userRepo.GetAsync(1);
+            var result = await _userRepo.GetAsync(1);
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Id7_Failure()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-            var result = await userRepo.GetAsync(7);
+            var result = await _userRepo.GetAsync(7);
             result.ShouldBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Admins_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Admin };
-            var result = await userRepo.GetAsync(actTypes);
+            var result = await _userRepo.GetAsync(actTypes);
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Preceptor_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Preceptor };
-            var result = await userRepo.GetAsync(actTypes);
+            var result = await _userRepo.GetAsync(actTypes);
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Resident_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Resident };
-            var result = await userRepo.GetAsync(actTypes);
+            var result = await _userRepo.GetAsync(actTypes);
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Student_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Student };
-            var result = await userRepo.GetAsync(actTypes);
+            var result = await _userRepo.GetAsync(actTypes);
             result.ShouldNotBeNull();
         }
 
@@ -132,21 +83,11 @@ namespace PreceptorTime.Infrastructure.Tests
         public async Task Add_User_Success(string jsonEntity)
         {
             var entity = JsonConvert.DeserializeObject<User>(jsonEntity);
-
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_add_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Student };
-            userRepo.Add(entity);
-            await userRepo.UnitOfWork.SaveChangesAsync();
+            _userRepo.Add(entity);
+            await _userRepo.UnitOfWork.SaveChangesAsync();
 
-            context.Users
+            _context.Users
                 .FirstOrDefault(u => u.Id == entity.Id)
                 .ShouldNotBeNull();
         }
@@ -156,22 +97,12 @@ namespace PreceptorTime.Infrastructure.Tests
         public async Task Add_User_Failure(string jsonEntity)
         {
             var entity = JsonConvert.DeserializeObject<User>(jsonEntity);
-
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_add_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Student };
             
             await Assert.ThrowsAsync<ArgumentException>( async () => 
             { 
-                userRepo.Add(entity);
-                await userRepo.UnitOfWork.SaveChangesAsync();
+                _userRepo.Add(entity);
+                await _userRepo.UnitOfWork.SaveChangesAsync();
             });
         }
 
@@ -180,22 +111,12 @@ namespace PreceptorTime.Infrastructure.Tests
         public async Task Update_User_Failure(string jsonEntity)
         {
             var entity = JsonConvert.DeserializeObject<User>(jsonEntity);
-
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_add_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Student };
 
             await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () =>
             {
-                userRepo.Update(entity);
-                await userRepo.UnitOfWork.SaveChangesAsync();
+                _userRepo.Update(entity);
+                await _userRepo.UnitOfWork.SaveChangesAsync();
             });
         }
 
@@ -204,22 +125,12 @@ namespace PreceptorTime.Infrastructure.Tests
         public async Task Update_User_Success(string jsonEntity)
         {
             var entity = JsonConvert.DeserializeObject<User>(jsonEntity);
-
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_update_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var userRepo = new UserRepository(context);
-
             var actTypes = new List<AccountType>() { AccountType.Student };
 
-            userRepo.Update(entity);
-            await userRepo.UnitOfWork.SaveChangesAsync();
+            _userRepo.Update(entity);
+            await _userRepo.UnitOfWork.SaveChangesAsync();
 
-            context.Users
+            _context.Users
                 .FirstOrDefault(u => u.Id == entity.Id)
                 ?.Active.ShouldBeFalse();
         }

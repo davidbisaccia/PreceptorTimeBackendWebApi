@@ -7,130 +7,83 @@ using Shouldly;
 using Newtonsoft.Json;
 using PreceptorTime.Domain.Entities;
 using System.Linq;
+using PreceptorTime.Fixtures;
 
 namespace PreceptorTime.Infrastructure.Tests
 {
-    public class TimeEntryRepositoryTests
+    public class TimeEntryRepositoryTests : IClassFixture<PreceptorTimeContextFactory>
     {
+        private readonly TimeEntryRepository _sut;
+        private readonly TestPreceptorTimeContext _context;
+
+        public TimeEntryRepositoryTests(PreceptorTimeContextFactory factory)
+        {
+            _context = factory.ContextInstance;
+            _sut = new TimeEntryRepository(_context);
+        }
+
         [Fact]
         public async Task GetAsync_Year2020_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
+            //var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
+            //    .UseInMemoryDatabase(databaseName: "should_get_data")
+            //    .Options;
 
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
+            //await using var context = new TestPreceptorTimeContext(options);
+            //context.Database.EnsureCreated();
 
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetAsync(2020);
+            //var sut = new TimeEntryRepository(context);
+            var result = await _sut.GetYearAsync(2020);
             result.ShouldNotBeNull();
         }
 
         [Fact]
         public async Task GetAsync_Year2021_Empty()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetAsync(2021);
+            var result = await _sut.GetYearAsync(2021);
             result.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task GetLearnerAsync_Id1_Year2020_Empty()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetLearnerAsync(2020, 1);
+            var result = await _sut.GetLearnerAsync(2020, 1);
             result.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task GetLearnerAsync_Id2_Year2021_Empty()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetLearnerAsync(2021, 2);
+            var result = await _sut.GetLearnerAsync(2021, 2);
             result.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task GetLearnerAsync_Id2_Year2020_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetLearnerAsync(2020, 2);
+            var result = await _sut.GetLearnerAsync(2020, 2);
             result.ShouldNotBeEmpty();
         }
 
 
-        //////////
         [Fact]
         public async Task GetTeacherAsync_Id2_Year2020_Empty()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetTeacherAsync(2020, 2);
+            var result = await _sut.GetTeacherAsync(2020, 2);
             result.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task GetTeacherAsync_Id1_Year2021_Empty()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetTeacherAsync(2021, 1);
+            var result = await _sut.GetTeacherAsync(2021, 1);
             result.ShouldBeEmpty();
         }
 
         [Fact]
         public async Task GetTeacherAsync_Id1_Year2020_Success()
         {
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_get_data")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            var result = await sut.GetTeacherAsync(2020, 1);
+            var result = await _sut.GetTeacherAsync(2020, 1);
             result.ShouldNotBeEmpty();
         }
 
@@ -140,19 +93,10 @@ namespace PreceptorTime.Infrastructure.Tests
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_add_new_items")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-
             await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                sut.Add(entity);
-                await sut.UnitOfWork.SaveEntitiesAsync();
+                _sut.Add(entity);
+                await _sut.UnitOfWork.SaveEntitiesAsync();
             });
         }
 
@@ -161,20 +105,11 @@ namespace PreceptorTime.Infrastructure.Tests
         public async Task Add_NewTimeEntry_Success(string jsonEntity)
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
+            _sut.Add(entity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_add_new_items")
-                .Options;
+            await _sut.UnitOfWork.SaveEntitiesAsync();
 
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-            sut.Add(entity);
-
-            await sut.UnitOfWork.SaveEntitiesAsync();
-
-            context.TimeEntries
+            _context.TimeEntries
                 .FirstOrDefault(x => x.Id == entity.Id)
                 .ShouldNotBeNull();
         }
@@ -185,19 +120,10 @@ namespace PreceptorTime.Infrastructure.Tests
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_update_new_items")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-
-            await Assert.ThrowsAsync<DbUpdateConcurrencyException>( async () =>
+            await Assert.ThrowsAsync<InvalidOperationException>( async () =>
             {
-                sut.Update(entity);
-                await sut.UnitOfWork.SaveEntitiesAsync();
+                _sut.Update(entity);
+                await _sut.UnitOfWork.SaveEntitiesAsync();
             });
         }
 
@@ -207,19 +133,10 @@ namespace PreceptorTime.Infrastructure.Tests
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_update_new_items")
-                .Options;
+            _sut.Update(entity);
+            await _sut.UnitOfWork.SaveEntitiesAsync();
 
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-
-            sut.Update(entity);
-            await sut.UnitOfWork.SaveEntitiesAsync();
-
-            context.TimeEntries
+            _context.TimeEntries
                 .FirstOrDefault(x => x.Id == entity.Id)
                 ?.Hours.ShouldBe(450);
         }
@@ -230,19 +147,10 @@ namespace PreceptorTime.Infrastructure.Tests
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_delete_exisiting_items")
-                .Options;
+            await _sut.Delete(entity);
+            await _sut.UnitOfWork.SaveEntitiesAsync();
 
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-
-            sut.Delete(entity);
-            await sut.UnitOfWork.SaveEntitiesAsync();
-
-            context.TimeEntries
+            _context.TimeEntries
                 .FirstOrDefault(x => x.Id == entity.Id)
                 .ShouldBeNull();
         }
@@ -253,20 +161,25 @@ namespace PreceptorTime.Infrastructure.Tests
         {
             var entity = JsonConvert.DeserializeObject<TimeEntry>(jsonEntity);
 
-            var options = new DbContextOptionsBuilder<PreceptorTimeContext>()
-                .UseInMemoryDatabase(databaseName: "should_delete_exisiting_items")
-                .Options;
-
-            await using var context = new TestPreceptorTimeContext(options);
-            context.Database.EnsureCreated();
-
-            var sut = new TimeEntryRepository(context);
-
-            await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () =>
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                sut.Delete(entity);
-                await sut.UnitOfWork.SaveEntitiesAsync();
+                await _sut.Delete(entity);
+                await _sut.UnitOfWork.SaveEntitiesAsync();
             });
+        }
+
+        [Fact]
+        public async Task GetAsync_Id1_Success()
+        {
+            var result = await _sut.GetEntryAsync(1);
+            result.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public async Task GetAsync_Id10_Empty()
+        {
+            var result = await _sut.GetEntryAsync(10);
+            result.ShouldBeNull();
         }
     }
 }

@@ -8,11 +8,13 @@ namespace PreceptorTime.Domain.Repositories
 {
     public interface ITimeEntryRepository : IRepository
     {
-        Task<IEnumerable<TimeEntry>> GetAsync(int year);
+        Task<IEnumerable<TimeEntry>> GetYearAsync(int year);
         Task<IEnumerable<TimeEntry>> GetLearnerAsync(int year, int id);
         Task<IEnumerable<TimeEntry>> GetTeacherAsync(int year, int id);
+        Task<TimeEntry> GetEntryAsync(int id);
+        Task<IEnumerable<int>> GetAvailableYears();
         TimeEntry Add(TimeEntry time);
-        TimeEntry Update(TimeEntry time);
-        bool Delete(TimeEntry time);
+        Task<TimeEntry> Update(TimeEntry time);
+        Task<bool> Delete(TimeEntry time);
     }
 }

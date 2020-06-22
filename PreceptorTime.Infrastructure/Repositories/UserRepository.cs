@@ -37,6 +37,7 @@ namespace PreceptorTime.Infrastructure.Repositories
         {
             return await _context.Users
                 .Where(u => accountTypes.Contains(u.Account))
+                .Select(u => u)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -45,6 +46,14 @@ namespace PreceptorTime.Infrastructure.Repositories
         {
             return await _context.Users
                 .Where(u => u.Id == id)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<User> GetAsync(string displayName)
+        {
+            return await _context.Users
+                .Where(u => u.DisplayName == displayName)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }

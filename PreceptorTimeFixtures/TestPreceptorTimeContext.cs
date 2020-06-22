@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PreceptorTime.Domain.Entities;
-using PreceptorTime.Infrastructure.Tests.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using PreceptorTime.Fixtures.Extensions;
+using PreceptorTime.Infrastructure;
 
-namespace PreceptorTime.Infrastructure.Tests
+namespace PreceptorTime.Fixtures
 {
     public class TestPreceptorTimeContext : PreceptorTimeContext
     {

@@ -2,7 +2,7 @@
   {
     "Id": 1,
     "DisplayName": "dave",
-    "AccountType": "preceptor",
+    "Account": "Preceptor",
     "Active": "true",
     "Email": "dave",
     "Token": "token",
@@ -12,9 +12,9 @@
   {
     "Id": 2,
     "DisplayName": "me",
-    "AccountType": "student",
+    "Account": "Student",
     "Active": true,
-    "Email": "",
+    "Email": "a",
     "Token": "token",
     "Password": "password",
     "TokenExpiration": "2020-06-11T02:35:16"
@@ -22,9 +22,9 @@
   {
     "Id": 3,
     "DisplayName": "Brad",
-    "AccountType": "admin",
+    "Account": "Admin",
     "Active": "true",
-    "Email": "dave",
+    "Email": "dave3",
     "Token": "token",
     "Password": "password",
     "TokenExpiration": "2020-06-11T02:35:16"
@@ -32,9 +32,9 @@
   {
     "Id": 4,
     "DisplayName": "MECEPTOR",
-    "AccountType": "preceptor",
+    "Account": "Preceptor",
     "Active": "true",
-    "Email": "dave",
+    "Email": "dave4",
     "Token": "token",
     "Password": "password",
     "TokenExpiration": "2020-06-11T02:35:16"
@@ -42,9 +42,9 @@
   {
     "Id": 5,
     "DisplayName": "peeps",
-    "AccountType": "resident",
+    "Account": "Resident",
     "Active": "true",
-    "Email": "dave",
+    "Email": "dave5",
     "Token": "token",
     "Password": "password",
     "TokenExpiration": "2020-06-11T02:35:16"
@@ -52,9 +52,9 @@
   {
     "Id": 6,
     "DisplayName": "other peeps",
-    "AccountType": "student",
+    "Account": "Student",
     "Active": "true",
-    "Email": "dave",
+    "Email": "dave6",
     "Token": "token",
     "Password":  "password",
     "TokenExpiration": "2020-06-11T02:35:16"

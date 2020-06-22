@@ -2,9 +2,6 @@
 using PreceptorTime.Domain.Entities;
 using PreceptorTime.Domain.Repositories;
 using PreceptorTime.Infrastructure.SchemaDefinitions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

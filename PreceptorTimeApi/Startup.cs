@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PreceptorTime.Api.Extensions;
+using PreceptorTime.Domain.Extensions;
 
 namespace PreceptorTime.Api
 {
@@ -21,7 +22,10 @@ namespace PreceptorTime.Api
         {
             services
                 .AddPrecetorTimeContext(Configuration.GetSection("DataSource:ConnectionString").Value)
+                .AddMappers()
+                .AddServices()
                 .AddControllers()
+                .AddValidation()
                 .AddNewtonsoftJson();
                     
         }

@@ -10,6 +10,7 @@ namespace PreceptorTime.Domain.Repositories
 	{
 		Task<IEnumerable<User>> GetAsync();
 		Task<IEnumerable<User>> GetAsync(List<AccountType> accountTypes);
+		Task<User> GetAsync(string displayName);
 		Task<User> GetAsync(int id);
 		User Add(User user);
 		User Update(User user);

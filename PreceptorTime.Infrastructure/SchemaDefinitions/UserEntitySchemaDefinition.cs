@@ -13,6 +13,7 @@ namespace PreceptorTime.Infrastructure.SchemaDefinitions
         {
             builder.ToTable("Users");
             builder.HasKey(x => x.Id);
+
             builder.Property(x => x.Account)
                 .IsRequired();
 
@@ -22,9 +23,19 @@ namespace PreceptorTime.Infrastructure.SchemaDefinitions
             builder.Property(x => x.DisplayName)
                 .IsRequired()
                 .HasMaxLength(40);
+            //non clusted idx
+            builder.HasIndex(x => x.DisplayName)
+                .IsUnique();
+
+
+
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+            //non clusted idx
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
+
             builder.Property(x => x.Password)
                 .IsRequired()
                 .HasMaxLength(20);

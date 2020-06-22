@@ -97,6 +97,12 @@ namespace PreceptorTimeApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DisplayName")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 

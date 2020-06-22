@@ -21,21 +21,24 @@ namespace PreceptorTime.Infrastructure.Repositories
 
         public TimeEntry Add(TimeEntry time)
         {
-            return _context.TimeEntries
+            return  _context.TimeEntries
                 .Add(time)
                 .Entity;
         }
 
-        public bool Delete(TimeEntry time)
+        public async Task<bool> Delete(TimeEntry time)
         {
-            _context.Entry(time).State = EntityState.Deleted;
+            var found = await GetEntryAsync(time.Id);
+            _context.Entry(found).State = EntityState.Deleted;
             return true;
         }
 
-        public async Task<IEnumerable<TimeEntry>> GetAsync(int year)
+        public async Task<IEnumerable<TimeEntry>> GetYearAsync(int year)
         {
             return await _context.TimeEntries
                 .Where(t => t.Date.Year == year)
+                .Include(x => x.Student)
+                .Include(x => x.Teacher)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -44,6 +47,8 @@ namespace PreceptorTime.Infrastructure.Repositories
         {
             return await _context.TimeEntries
                 .Where(t => t.Date.Year == year && t.StudentId == id)
+                .Include(x => x.Student)
+                .Include(x => x.Teacher)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -52,14 +57,40 @@ namespace PreceptorTime.Infrastructure.Repositories
         {
             return await _context.TimeEntries
                 .Where(t => t.Date.Year == year && t.TeacherId == id)
+                .Include(x => x.Student)
+                .Include(x => x.Teacher)
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public TimeEntry Update(TimeEntry time)
+        public async Task<IEnumerable<int>> GetAvailableYears()
+        {
+            return await _context.TimeEntries
+                .Select(x => x.Date.Year)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<TimeEntry> Update(TimeEntry time)
         {
             _context.Entry(time).State = EntityState.Modified;
             return time;
+        }
+
+        public async Task<TimeEntry> GetEntryAsync(int id)
+        {
+            var entry = await _context.TimeEntries
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .Include(x => x.Student)
+                .Include(x => x.Teacher)
+                .FirstOrDefaultAsync();
+
+            if (entry == null)
+                return null;
+
+            _context.Entry(entry).State = EntityState.Detached;
+            return entry;
         }
     }
 }

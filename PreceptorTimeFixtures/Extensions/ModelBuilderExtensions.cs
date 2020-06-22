@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PreceptorTime.Infrastructure.Tests.Extensions
+namespace PreceptorTime.Fixtures.Extensions
 {
     public static class ModelBuilderExtensions
     {
